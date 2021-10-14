@@ -24,9 +24,7 @@ create table artista(
                         dataNasc timestamptz,
                         dataMorte timestamptz,
                         pais varchar(20),
-                        estilo varchar(20),
-                        instituicao_responsavel varchar(15),
-                        foreign key (instituicao_responsavel) references instituicao(cnpj)
+                        estilo varchar(20)
 );
 
 create table obra_arte (
