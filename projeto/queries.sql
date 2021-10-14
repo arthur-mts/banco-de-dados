@@ -12,20 +12,27 @@ select nome, datainicio, datafim
 from exposicao where extract(year from datainicio) >= extract(year from  now()) - 2;
 
 -- 4: Relação dos objetos emprestados e sua respectiva coleção que fizeram parte da exposição realizada no dia tal ou de nome tal;
-explain select t.titulo, t."desc", c.nome
+select oa.titulo, oa."desc", c.nome
 from temporario t
+    join obra_arte oa on oa.codigo = t.codigo
     join exposicao_obra eo on eo.codigo_obra  = t.codigo
     inner join exposicao e on e.codigo = eo.codigo_exposicao
     join colecao c on c.codigo = t.codigo_colecao
-    where e.nome ilike '%%';
+    where extract(day from e.datainicio) = 14;
+-- Para filtrar pelo nome:
+-- where e.nome ilike '%%';
 
 -- 5: Objetos emprestados que estão com o prazo de empréstimo vencido;
-select titulo, data_fim
-from temporario where data_fim > now();
+select oa.titulo, oa."desc" ,data_fim
+from temporario t
+join obra_arte oa on t.codigo = oa.codigo
+where t.data_fim > now();
 
 -- 6: Objeto mais caro em exposição no museu atualmente
-select titulo, custo
-from permanent order by custo desc limit 1;
+select oa.titulo, p.custo
+from permanent p
+join obra_arte oa on oa.codigo = p.codigo
+order by p.custo desc limit 1;
 
 -- 7: Pessoas importantes que foram homenageadas com esculturas que fazem parte do
 -- acervo do museu.

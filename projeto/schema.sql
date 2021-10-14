@@ -5,7 +5,8 @@ SET search_path to "museu", public;
 create table instituicao(
                             cnpj varchar(15) primary key,
                             descricao varchar(100),
-                            telefone varchar(20)
+                            telefone varchar(20),
+                            nome varchar(100)
 );
 
 create table colecao(
