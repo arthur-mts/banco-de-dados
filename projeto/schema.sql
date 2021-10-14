@@ -46,6 +46,7 @@ create table exposicao (
 create table exposicao_obra (
                                 codigo_obra int,
                                 codigo_exposicao int,
+                                primary key(codigo_obra, codigo_exposicao),
                                 foreign key (codigo_exposicao) references exposicao(codigo),
                                 foreign key (codigo_obra) references obra_arte(codigo)
 );
@@ -78,20 +79,22 @@ create table exposicao_obra (
 -- ;
 -- ALTER TABLE exposicao_obra ADD CONSTRAINT ck_date CHECK (date_range_validate(codigo_obra, codigo_exposicao));
 
-
--- AQUI FOI USADO O 
 create table permanent (
+                           codigo int primary key,
                            data_aquisicao timestamptz,
                            custo float,
-                           vendedor varchar(100)
-) inherits (obra_arte);
+                           vendedor varchar(100),
+                           foreign key (codigo) references obra_arte(codigo)
+);
 
 create table temporario (
+                            codigo int primary key,
                             data_inicio timestamptz,
                             data_fim timestamptz,
                             codigo_colecao int,
-                            foreign key (codigo_colecao) references colecao(codigo)
-) inherits (obra_arte);
+                            foreign key (codigo_colecao) references colecao(codigo),
+                            foreign key (codigo) references obra_arte(codigo)
+);
 
 create table escultura (
   codigo int primary key,
