@@ -13,8 +13,6 @@ create table colecao(
                         nome varchar(20),
                         descricao varchar(100),
                         instituicao_responsavel varchar(15),
-                        dataInicioEmprestimo timestamptz,
-                        dataFimEmprestimo timestamptz,
                         foreign key (instituicao_responsavel) references instituicao(cnpj)
 );
 
