@@ -52,34 +52,6 @@ create table exposicao_obra (
                                 foreign key (codigo_obra) references obra_arte(codigo)
 );
 
-
--- CREATE OR REPLACE FUNCTION date_range_validate(codigo_obra_p int, codigo_exposica_p int)
---     RETURNS boolean
---     LANGUAGE plpgsql
--- AS $function$
--- DECLARE
---     valid boolean;
---     datetime_exposicao_fim timestamptz;
---     datetime_exposicao_start timestamptz;
--- BEGIN
---     datetime_exposicao_fim := (select dataFim from exposicao where codigo = codigo_exposica_p);
---     datetime_exposicao_start := (select dataInicio from exposicao where codigo = codigo_exposica_p);
---     valid := (SELECT CASE WHEN
---         (SELECT 1 FROM   exposicao e
---             inner join exposicao_obra eo on e.codigo = eo.codigo_exposicao
---             WHERE  codigo_obra_p = eo.codigo_obra
---                 and eo.codigo_exposicao = codigo_exposica_p
---                 and e.dataFim <= datetime_exposicao_fim
---                 and e.dataInicio >= datetime_exposicao_start
---                               ) > 0
---                              THEN false ELSE true END);
---
---     return valid;
--- end
--- $function$
--- ;
--- ALTER TABLE exposicao_obra ADD CONSTRAINT ck_date CHECK (date_range_validate(codigo_obra, codigo_exposicao));
-
 create table permanent (
                            codigo int primary key,
                            data_aquisicao timestamptz,
@@ -111,7 +83,7 @@ create table escultura (
 create table pintura (
     codigo int primary key,
     altura float,
-    peso float,
+    largura float,
     foreign key (codigo) references obra_arte(codigo)
 );
 
@@ -121,3 +93,30 @@ create table outro (
     foreign key (codigo) references obra_arte(codigo)
 );
 
+
+CREATE OR REPLACE FUNCTION date_range_validate(codigo_obra_p int, codigo_exposica_p int)
+    RETURNS boolean
+    LANGUAGE plpgsql
+AS $function$
+DECLARE
+    valid boolean;
+    datetime_exposicao_fim timestamptz;
+    datetime_exposicao_start timestamptz;
+BEGIN
+    datetime_exposicao_fim := (select dataFim from exposicao where codigo = codigo_exposica_p);
+    datetime_exposicao_start := (select dataInicio from exposicao where codigo = codigo_exposica_p);
+    valid := (SELECT CASE WHEN
+        sum((SELECT 1 as flag FROM exposicao e
+            inner join exposicao_obra eo on e.codigo = eo.codigo_exposicao
+            WHERE  codigo_obra_p = eo.codigo_obra
+                and e.dataFim <= datetime_exposicao_fim
+                and e.dataInicio >= datetime_exposicao_start
+                              )) > 0
+                             THEN false ELSE true END);
+
+    return valid;
+end
+$function$
+;
+
+ALTER TABLE exposicao_obra ADD CONSTRAINT ck_date CHECK (date_range_validate(codigo_obra, codigo_exposicao));
