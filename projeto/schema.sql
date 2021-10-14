@@ -93,18 +93,18 @@ create table permanent (
 create table temporario (
                             data_inicio timestamptz,
                             data_fim timestamptz,
-                            colecao varchar(100)
+                            codigo_colecao int,
+                            foreign key (codigo_colecao) references colecao(codigo)
 ) inherits (obra_arte);
 
-
--- USEI O MODELO 1 DA REGRA 8 DE GENERALIZAÇÃO PARA ESSAS TABELAS
--- https://drive.google.com/file/d/10l4ZpYs1DCQ9jGLXC_YGmFq5DLipns8R/view
 create table escultura (
   codigo int primary key,
   largura float,
   altura float,
   peso float,
   material varchar(30),
+  estatua_flag boolean,
+  homenageado varchar(100),
   foreign key (codigo) references obra_arte(codigo)
 );
 
@@ -121,9 +121,3 @@ create table outro (
     foreign key (codigo) references obra_arte(codigo)
 );
 
-insert into exposicao(nome, datainicio, datafim) values ('Test1', '2021-10-13 23:50:41.638139 +00:00', '2021-10-13 23:50:41.638139 +00:00');
-insert into exposicao(nome, datainicio, datafim) values ('Test2', '2021-10-13 23:50:41.638139 +00:00', '2021-10-13 23:50:41.638139 +00:00');
-insert into instituicao(cnpj, descricao, telefone) values ('4545455454', 'ssdasdas', 'sadsasdssd');
-insert into artista(nome, dataNasc, dataMorte, pais, estilo, instituicao_responsavel) VALUES ('artista', now(), now(), 'test', 'rere', '4545455454');
-insert into obra_arte(titulo, estilo, anocriacao, "desc", tipo, artista) VALUES
-    ('Tesste', 'sdlk', 2016, 'dasda', 'sdada', 1);
