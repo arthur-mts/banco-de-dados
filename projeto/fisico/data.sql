@@ -10,16 +10,16 @@ values ('234861', 'Delivery de alimentos', '11 933249999', 'IFOOD');
 -- values ('', '//', '//','XX', 'Modernismo');
 
 insert into artista (nome, dataNasc, dataMorte, pais, estilo)
-values ('Tomi', '23/4/1898','6/6/1966','EUA', 'Modernismo');
+values ('Tomi', now() - interval '200 years',now() - interval '150 years','EUA', 'Modernismo');
 -- codigo(1)
 insert into artista (nome, dataNasc, dataMorte, pais, estilo)
-values ('Joao', '9/12/1980','27/1/2010','BR', 'Modernismo');
+values ('Joao', now() - interval '80 years',now() - interval '60 years','BR', 'Modernismo');
 -- codigo(2)
 insert into artista (nome, dataNasc, dataMorte, pais, estilo)
-values ('Van Gogh', '30/3/1853', '29/7/1890','NL', 'Modernismo');
+values ('Van Gogh', now() - interval '250 years', now() - interval '180 years','NL', 'Modernismo');
 -- codigo(3)
 insert into artista (nome, dataNasc, dataMorte, pais, estilo)
-values ('Miguel', '10/2/1819', '30/7/1900','ES', 'Rupestre');
+values ('Miguel', now() - interval '200 years', now() - interval '120 years','ES', 'Rupestre');
 -- codigo(4)
 -- coleções
 insert into colecao (nome, descricao, instituicao_responsavel)
@@ -52,9 +52,6 @@ values (1, 90, 120)
 insert into obra_arte (titulo, estilo, anocriacao, "desc", artista)
 values ('Quarto em Arles', 'Modernismo', 1878, 'O quarto que Vincent Van Gogh alugou numa pensão na cidade de Arles',
         3)
-
-insert into temporario (codigo, data_inicio, data_fim, codigo_colecao)
-values (1, now(), now() + interval '15 days', 1)
 
 insert into pintura (codigo, altura, largura)
 values (2, 130, 85)
@@ -117,7 +114,7 @@ insert into permanent (codigo, data_aquisicao, custo, vendedor)
 values (7, now() - interval '20 days', 500, 'Jeff Jetsons')
 
 insert into escultura (codigo, largura, altura, peso, material, estatua_flag, homenageado)
-values (6, 180, 50, 40, 'metal', 'false', null)
+values (7, 180, 50, 40, 'metal', 'false', null)
 -- codigo(7)
 -----------------------------------------------------------------------
 

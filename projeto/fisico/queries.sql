@@ -3,9 +3,14 @@ select nome, datanasc
 from artista order by datanasc limit 1;
 
 -- 2: Quantidade de obras de cada um dos tipos relevantes para o museu
-select tipo,count(*)
-from obra_arte group by tipo;
+select count(e) as qnt_escultura
+from escultura e;
 
+select count(p) as qnt_pintura
+from pintura p;
+
+select count(o) as qnt_outro
+from outro o;
 
 -- 3: Data e nome das exposições realizadas nos últimos dois anos
 select nome, datainicio, datafim
