@@ -32,7 +32,6 @@ create table obra_arte (
                            estilo varchar(60),
                            anoCriacao int,
                            "desc" varchar(250),
-                           tipo varchar(60),
                            artista int,
                            foreign key (artista) references artista(codigo)
 );
